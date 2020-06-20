@@ -23,6 +23,8 @@ urlpatterns = [
     # 购物车的路由一定要放到主页路由的前面，因为它的限制更多
     # 如果主页放到前面，就无法找到购物车的路由了
     path('cart/',include('cart.urls',namespace='cart')),
+    # 订单路由
+    path('orders/',include('orders.urls',namespace='orders')),
     path('',include('shop.urls',namespace='shop')),
 ]
 

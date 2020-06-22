@@ -132,3 +132,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR,'media/')
 
 # 这是用户会话中购物车的键
 CART_SESSION_ID = 'cart'
+
+#CELERY_ALWAYS_EAGER = False
+# 把邮件发到控制台
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

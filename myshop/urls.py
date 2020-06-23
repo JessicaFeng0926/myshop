@@ -25,6 +25,8 @@ urlpatterns = [
     path('cart/',include('cart.urls',namespace='cart')),
     # 订单路由
     path('orders/',include('orders.urls',namespace='orders')),
+    # 支付路由
+    path('payment/',include('payment.urls',namespace='payment')),
     path('',include('shop.urls',namespace='shop')),
 ]
 

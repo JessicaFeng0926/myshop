@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
+from django.urls import reverse
 
 from .models import OrderItem
 from .forms import OrderCreateForm
@@ -23,10 +24,11 @@ def order_create(request):
             # 用delay方法声明这是一个异步的操作
             # 会被加入celery的队列
             order_created.delay(order.id)
+            # 把订单id放进session
+            request.session['order_id'] = order.id
+            # 重定向到支付页面
+            return redirect(reverse('payment:process'))
             
-            return render(request,
-                          'orders/order/created.html',
-                          {'order':order})
     else:
         form = OrderCreateForm()
     return render(request,

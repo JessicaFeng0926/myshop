@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 
+import braintree
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -42,6 +44,7 @@ INSTALLED_APPS = [
     'shop.apps.ShopConfig',
     'cart.apps.CartConfig',
     'orders.apps.OrdersConfig',
+    'payment.apps.PaymentConfig',
 ]
 
 MIDDLEWARE = [
@@ -136,3 +139,18 @@ CART_SESSION_ID = 'cart'
 #CELERY_ALWAYS_EAGER = False
 # 把邮件发到控制台
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# Braintree配置
+BRAINTREE_MERCHANT_ID = '9jhqg4dwwtmw7tzh'
+BRAINTREE_PUBLIC_KEY = '97mthtm54wf9bwnx'
+BRAINTREE_PRIVATE_KEY = '99b749a8e1392006491189cbcad8ee7d'
+
+BRAINTREE_CONF = braintree.Configuration(
+    # 因为当前是开发阶段，所以使用沙箱环境
+    # 上线的时候会把这个改成Environment.Production
+    braintree.Environment.Sandbox,
+    BRAINTREE_MERCHANT_ID,
+    BRAINTREE_PUBLIC_KEY,
+    BRAINTREE_PRIVATE_KEY
+)
+

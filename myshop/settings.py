@@ -154,3 +154,5 @@ BRAINTREE_CONF = braintree.Configuration(
     BRAINTREE_PRIVATE_KEY
 )
 
+# 要找到pdf的css需要使用这个路径
+STATIC_ROOT = os.path.abspath(os.path.join(BASE_DIR,'static/'))

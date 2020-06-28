@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 import os
 
 import braintree
+from django.utils.translation import gettext_lazy as _
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -40,16 +41,25 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    # 本地应用
+    ## 第三方app
+    # 这是翻译接口
+    'rosetta',
+    # 这是处理model翻译的模块
+    'parler',
+
+    ## 本地应用
     'shop.apps.ShopConfig',
     'cart.apps.CartConfig',
     'orders.apps.OrdersConfig',
     'payment.apps.PaymentConfig',
+    'coupons.apps.CouponsConfig',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    # 这个处理语言的中间件要在session后面，common前面
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -113,7 +123,28 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en'
+
+LANGUAGES = (
+    ('en',_('English')),
+    ('es',_('Spanish')),
+)
+
+LOCALE_PATHS = (
+    os.path.abspath(os.path.join(BASE_DIR,'locale/')),
+)
+
+# 默认语言是英语，没翻译的内容不要隐藏
+PARLER_LANGUAGES ={
+    None:(
+        {'code','en'},
+        {'code':'es'},
+    ),
+    'default':{
+        'fallback':'en',
+        'hide_untranslated':False,
+    }
+}
 
 TIME_ZONE = 'UTC'
 
@@ -156,3 +187,4 @@ BRAINTREE_CONF = braintree.Configuration(
 
 # 要找到pdf的css需要使用这个路径
 STATIC_ROOT = os.path.abspath(os.path.join(BASE_DIR,'static/'))
+

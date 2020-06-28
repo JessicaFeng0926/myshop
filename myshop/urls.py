@@ -17,18 +17,25 @@ from django.contrib import admin
 from django.urls import path,include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.conf.urls.i18n import i18n_patterns
+from django.utils.translation import gettext_lazy as _
 
-urlpatterns = [
-    path('admin/', admin.site.urls),
+# 这些路由都加上了语言前缀
+urlpatterns = i18n_patterns(
+    path(_('admin/'), admin.site.urls),
     # 购物车的路由一定要放到主页路由的前面，因为它的限制更多
     # 如果主页放到前面，就无法找到购物车的路由了
-    path('cart/',include('cart.urls',namespace='cart')),
+    path(_('cart/'),include('cart.urls',namespace='cart')),
     # 订单路由
-    path('orders/',include('orders.urls',namespace='orders')),
+    path(_('orders/'),include('orders.urls',namespace='orders')),
     # 支付路由
-    path('payment/',include('payment.urls',namespace='payment')),
+    path(_('payment/'),include('payment.urls',namespace='payment')),
+    # 优惠券
+    path(_('coupons/'),include('coupons.urls',namespace='coupons')),
+    # 翻译接口路由
+    path('rosetta/',include('rosetta.urls')),
     path('',include('shop.urls',namespace='shop')),
-]
+)
 
 # 只有在开发环境才使用这个媒体文件路径，不适合在生产环境使用
 if settings.DEBUG:

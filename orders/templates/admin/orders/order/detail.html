@@ -74,8 +74,15 @@ order.id }}</a>
         <td class="num">${{ item.get_cost }}</td>
         </tr>
         {% endfor %}
+        {%if order.discount %}
+        <tr class='subtotal'>
+            <td>Discount</td>
+            <td colspan="2"></td>
+            <td>{{order.discount}}% off</td>
+        </tr>
+        {%endif%}
     <tr class="total">
-    <td colspan="3">Total</td>
+    <td colspan="3">Total After Discount</td>
     <td class="num">${{ order.get_total_cost }}</td>
     </tr>
     </tbody>

@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     'rosetta',
     # 这是处理model翻译的模块
     'parler',
+    # 这是处理不同语言格式的模块
+    'localflavor',
 
     ## 本地应用
     'shop.apps.ShopConfig',
@@ -137,7 +139,7 @@ LOCALE_PATHS = (
 # 默认语言是英语，没翻译的内容不要隐藏
 PARLER_LANGUAGES ={
     None:(
-        {'code','en'},
+        {'code':'en'},
         {'code':'es'},
     ),
     'default':{
@@ -187,4 +189,14 @@ BRAINTREE_CONF = braintree.Configuration(
 
 # 要找到pdf的css需要使用这个路径
 STATIC_ROOT = os.path.abspath(os.path.join(BASE_DIR,'static/'))
+
+# 配置redis
+REDIS_HOST = 'localhost'
+REDIS_PORT = 6379
+REDIS_DB = 1
+REDIS_USERNAME = 'root'
+REDIS_PASSWORD = 'jessica'
+
+
+
 
